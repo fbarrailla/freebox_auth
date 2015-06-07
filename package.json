@@ -1,0 +1,24 @@
+{
+  "name": "freebox_auth",
+  "version": "1.0.0",
+  "description": "Freebox API v3.0 session token obtaining",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "freebox",
+    "api",
+    "v3",
+    "authentication"
+  ],
+  "author": "François Barrailla",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.12.4",
+    "http-proxy": "^1.11.1",
+    "q": "^1.4.1",
+    "redbird": "^0.4.7"
+  }
+}

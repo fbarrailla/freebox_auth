@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Freebox Auth test</title>
+	<style>
+		body { font-family: "Helvetica neue", Helvetica, Arial; background: #090909; font-size: 2em; color: #FFF; }
+		li+li { margin-top: 20px; }
+	</style>
+</head>
+<body>
+	
+	<ul id="result"></ul>
+
+	<script>
+		var result = document.getElementById('result');
+
+		fetch('/token')
+			.then(function(resp){
+				resp.json().then(function(data){
+					getFreeboxData( data.session_token )
+				})
+				.catch(showError)	
+			})
+			.catch(showError)				
+
+		function getFreeboxData( token ){
+			fetch('/api/v3/fs/ls/L0Rpc3F1ZSBkdXI=', {
+				headers: {
+					'X-Fbx-App-Auth': token
+				}
+			})
+				.then(function(resp){
+					resp.json().then(function(data){
+					 	var children = '';
+					 	data.result.forEach(function(dir){
+					 		if (dir.name[0] !== '.')
+					 			children += '<li>' + dir.name + '</li>';
+					 	});
+					 	result.innerHTML = children;
+					})
+					.catch(showError)	
+				})
+				.catch(showError)	
+		}
+
+		function showError(err){
+			result.style.color = 'red';
+			result.innerHTML = '<li>An error occured</li>'
+							 + '<li>'+err.toString()+'</li>';
+		}
+	</script>
+
+</body>
+</html>
